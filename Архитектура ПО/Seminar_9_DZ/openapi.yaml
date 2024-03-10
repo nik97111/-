@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Order resources in the cloud
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/api/v1/
+    description: Dev server
+paths:
+  /clouds:
+    get:
+      summary: Method for getting a list of resources on the cloud
+      tags:
+        - Clouds
+      operationId: getAllClouds
+      responses:
+        "200":
+           description: Successful response with a list of resources in the cloud
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Clouds"
+        "default":
+           description: Other answers
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Error"
+    post:
+      summary: Create an order in the cloud
+      tags:
+        - Clouds
+      operationId: createCloud
+      # requestBody: 
+      #   content:
+      #     aplication/json:
+      #       schema:
+      #         $ref: "#/components/schemas/Error"
+      responses:
+        "200":
+           description: Successful response with a list of resources in the cloud
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Clouds"
+        "default":
+           description: Other answers
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Error"
+  /clouds/{cloud_id}:
+    get:
+      summary: Method for getting resources in the cloud by id
+      tags:
+        - Clouds
+      operationId: getСloud_id
+      parameters:
+        - name: cloud_id
+          in: path
+          required: true
+          description: Order ID in the cloud
+          schema:
+            type: string
+          example: ff05b315
+      responses:
+        "200":
+           description: Resource in the cloud by id successfully received
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Clouds"
+        "default":
+           description: Other answers
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Error"
+    delete:
+      summary: Method for canceling an order in the cloud by id
+      tags: 
+        - Clouds
+      operationId: cancelCloudBuyId
+      parameters:
+       - name: cloud_id
+         in: path
+         required: true
+         description: Order ID in the cloud
+         schema:
+           type: string
+         example: ff05b315
+      responses:
+        "200":
+           description: Order successfully deleted
+           content:
+             aplication/json: {}
+        "404":
+           description: Order not found
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Error"
+        "default":
+           description: Other answers
+           content:
+             aplication/json:
+               schema:
+                 $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Cloud:
+      type: object
+      required:
+        - id_client
+        - OS
+        - RAM
+        - CPU
+        - HDD
+      properties:
+        cloud_id:
+          type: string
+          example: ff05b315
+        id_client:
+          type: string
+          example: ff05b315
+        OS:
+          type: string
+          enum:
+            - Windows
+            - Linux
+          description: Server operating system
+        RAM:
+          type: string
+          example: 128
+          description: Capacity random access memory
+        CPU:
+          type: string
+          example: 8
+          description: Number of processor cores
+    Clouds:
+      type: array
+      items:
+        $ref: "#/components/schemas/Cloud"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+          
