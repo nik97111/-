@@ -1,0 +1,83 @@
+		Домашнее задание Семинар 1
+Создайте таблицу с мобильными телефонами, используя графический интерфейс.
+Id, ProductName, Manufacturer, ProductCount, Price
+Заполните БД данными.
+
+Выведите название, производителя и цену для товаров, количество которых превышает 2
+
+Выведите весь ассортимент товаров марки “Samsung”.
+
+4.*** С помощью регулярных выражений найти:
+
+Товары, в наименовании которых есть упоминание "Iphone"
+Товары, в наименовании которых есть упоминание "Samsung"
+Товары, в наименовании которых есть ЦИФРЫ
+Товары, в наименовании которых есть ЦИФРА "8"
+
+			Выполнение
+
+1. 
+Создаем схему:
+CREATE SCHEMA `Seminar_1_DZ` ;
+
+Создаем  таблицу:
+CREATE TABLE `Seminar_1_DZ`.`Phones` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `ProductName` VARCHAR(45) NOT NULL,
+  `Manufacture` VARCHAR(45) NOT NULL,
+  `ProductCount` INT(10) NULL,
+  `Price` INT(10) NULL,
+  PRIMARY KEY (`Id`));
+
+Заполняем таблицу:
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('1', 'iPhone 7', 'Apple', '2', '12000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('2', 'iPone 8', 'Apple', '7', '16000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('3', 'iPhone X', 'Apple', '23', '24000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('4', 'iPhone 12 Max', 'Apple', '45', '39000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('5', 'iPhone 14', 'Apple', '236', '51000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('6', 'Galaxy S9', 'Samsung', '45', '24000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('7', 'Galaxy S12', 'Samsung', '21', '27000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('8', 'RZ3', 'Motorola', '1', '54000');
+INSERT INTO `Seminar_1_DZ`.`Phones` (`Id`, `ProductName`, `Manufacture`, `ProductCount`, `Price`) VALUES ('9', '6510', 'Nokia', '1', '65000');
+Снимок 1
+
+2. Выводим название производителя и цену для товаров, количество которых превышает 2.
+SELECT Manufacture, Price FROM Seminar_1_DZ.Phones
+WHERE ProductCount > 2;
+Снимок 2
+
+3. Выведите весь ассортимент товаров марки “Samsung”
+SELECT ProductName FROM Seminar_1_DZ.Phones
+WHERE Manufacture = 'Samsung';
+Снимок 3
+
+4.*** С помощью регулярных выражений найти:
+
+Товары, в наименовании которых есть упоминание "iPhone"
+SELECT ProductName 
+FROM Seminar_1_DZ.Phones
+WHERE ProductName REGEXP 'iPhone';
+Снимок 4
+
+Товары, в наименовании которых есть упоминание "Samsung"
+SELECT Manufacture, ProductName 
+FROM Seminar_1_DZ.Phones
+WHERE Manufacture REGEXP 'Samsung';
+Снимок 5
+
+Товары, в наименовании которых есть ЦИФРЫ
+SELECT ProductName 
+FROM Seminar_1_DZ.Phones
+WHERE ProductName RLIKE '[0-9]';
+Снимок 6
+
+Товары, в наименовании которых есть ЦИФРА "8"
+SELECT ProductName 
+FROM Seminar_1_DZ.Phones
+WHERE ProductName RLIKE '[8]';
+Снимок 7
+
+
+
+
+

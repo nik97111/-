@@ -1,0 +1,61 @@
+1. Создайте функцию, которая принимает кол-во сек и формат их в кол-во дней часов. Пример: 123456 ->'1 days 10 hours 17 minutes 36 seconds '. 
+
+DELIMITER //
+CREATE FUNCTION sec(n INT)
+RETURNS varchar(30)
+DETERMINISTIC
+BEGIN
+    DECLARE days CHAR(3);
+    DECLARE hours, minutes, seconds CHAR(2);
+    DECLARE ost, ost1 INT;
+    DECLARE result VARCHAR(100);
+
+    SET days = CAST(num DIV (60*60*24) AS CHAR(3));
+    SET ost = num % (60*60*24);
+
+    SET hours = CAST(ost DIV (60*60) AS CHAR(2));
+    SET ost1 = ost % (60*60);
+
+    SET minutes = CAST(ost1 DIV (60) AS CHAR(2)); 
+
+    SET seconds = CAST(ost1 % (60) AS CHAR(2)); 
+
+    SET result = CONCAT(num, " -> ", days, " days ", hours, ' hours ', minutes, ' minutes ', seconds, ' seconds');
+    RETURN result;
+END //
+DELIMITER ;
+
+SELECT sec(123456);
+
+
+
+2. Выведите только четные числа от 1 до 10. Пример: 2,4,6,8,10
+
+DELIMITER //
+CREATE FUNCTION evenNumber (m int)
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+declare n int default 2;
+declare res VARCHAR(100) DEFAULT "";
+while n <= m do
+if n % 2 = 0 then
+
+set res = concat(res,' ',n);
+set n = n + 2;
+
+end if;
+end while;
+return res;
+END //
+DELIMITER ;
+
+select evenNumber(10);
+
+
+
+Конвертацию также можем реализовать сразу с выводом
+
+CREATE FUNCTION format_seconds(seconds INT)
+RETURNS VARCHAR(50)
+RETURN CONCAT(FLOOR(seconds/86400), ' days ', FLOOR(mod(seconds, 86400) / 3600), ' hours ', FLOOR(mod(seconds, 3600) / 60), ' minutes ', mod(seconds, 60), ' seconds');
