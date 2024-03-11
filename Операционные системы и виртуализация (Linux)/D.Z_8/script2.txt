@@ -1,0 +1,28 @@
+﻿Задание 2:
+Создать скрипт ownersort.sh, который в заданной папке копирует файлы в директории, названные по имени владельца каждого файла. Учтите, что файл должен принадлежать соответствующему владельцу. 
+Решение:
+
+#!/bin/bash
+
+if [ -d $1 ]
+        then
+                echo "Dir OK"
+                cd $1
+                for filename in *
+                        do
+                                echo $filename
+                                echo *
+                                name=$(stat -c%U $filename)
+
+                                mv $filename /home/$name
+                                echo "File $filename move to $name successfully!"
+                        done
+        else
+                echo "No DIR"
+                exit 2
+fi
+
+
+
+
+
